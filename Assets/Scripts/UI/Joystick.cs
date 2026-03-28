@@ -17,6 +17,9 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     [SerializeField]
     private Image handler;
 
+    [SerializeField]
+    private Image fill;
+
     /// <summary>
     /// 핸들러의 최대 위치.
     /// 핸들러가 바깥 원에서 나가지 못하게 막는 역할이다.
@@ -30,12 +33,17 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     /// 이동 방향.
     /// </summary>
     private Vector2 moveDir;
+    /// <summary>
+    /// 캔버스 그룹의 알파값을 가져오기 위한 컴포넌트
+    /// </summary>
+    private CanvasGroup canvasGroup;
 
     public Vector2 MoveDir => moveDir;
 
     private void Start()
     {
         joystickRadius = background.gameObject.GetComponent<RectTransform>().sizeDelta.y / 2;
+        canvasGroup = GetComponent<CanvasGroup>();
     }
 
     /// <summary>
@@ -44,6 +52,8 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     /// <param name="eventData">화면을 터치한 위치.</param>
     public void OnPointerDown(PointerEventData eventData)
     {
+        // 캔버스의 알파값을 1로 설정.
+        canvasGroup.alpha = 1;
         // 바깥 원과 핸들러의 위치를 터치한 화면의 위치로 바꾼다.
         background.transform.position = eventData.position;
         handler.transform.position = eventData.position;
@@ -83,5 +93,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         handler.transform.position = touchPosition;
         // 방향은 없도록 설정.
         moveDir = Vector2.zero;
+        // 캔버스의 알파값을 0으로 설정.
+        canvasGroup.alpha = 0;
     }
 }

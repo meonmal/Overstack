@@ -20,7 +20,14 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private PlayerRunTimeStat runTimeStats;
 
+    /// <summary>
+    /// 플레이어의 이동 방향.
+    /// </summary>
     private Vector2 moveInput;
+
+    /// <summary>
+    /// 플레이어의 이동 속도.
+    /// </summary>
     private float moveSpeed;
 
     /// <summary>
@@ -64,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
         // 최종 속도 = 방향 * 이동속도
         Vector2 velocity = moveInput * moveSpeed;
 
-        // Unity 6에서는 velocity 대신 linearVelocity를 사용한다.
+        // 리지드바디2D를 사용해 이동시킨다.
         rigid.linearVelocity = velocity;
     }
 }
