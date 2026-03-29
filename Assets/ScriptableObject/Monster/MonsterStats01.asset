@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80d4869c2d6d31443b516d69560152be, type: 3}
+  m_Name: MonsterStats01
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 7013631516640934163, guid: b438465a32eb63243a7889eb1f400d29, type: 3}
+  animatorController: {fileID: 22100000, guid: 574197ef5f163cc4cb001a2de00e64d7, type: 2}
+  maxHp: 5
+  damage: 1
+  moveSpeed: 2

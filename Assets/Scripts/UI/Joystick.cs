@@ -17,9 +17,6 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     [SerializeField]
     private Image handler;
 
-    [SerializeField]
-    private Image fill;
-
     /// <summary>
     /// 핸들러의 최대 위치.
     /// 핸들러가 바깥 원에서 나가지 못하게 막는 역할이다.
