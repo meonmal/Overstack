@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class Monster : MonoBehaviour
+public class Monster : MonoBehaviour, IDamageable
 {
     public MonsterStats MonsterStat { get; private set; }
 
@@ -16,6 +16,7 @@ public class Monster : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private MonsterMovement monsterMovement;
     private MonsterObjectPool ownerPool;
+    private float currentHp;
 
     private void Awake()
     {
@@ -26,6 +27,7 @@ public class Monster : MonoBehaviour
     private void Start()
     {
         spriteRenderer.sprite = MonsterStat.sprite;
+        currentHp = MonsterStat.MaxHp;
     }
 
     public void SetPool(IObjectPool<Monster> pool)
@@ -36,6 +38,21 @@ public class Monster : MonoBehaviour
     public void SetOwnerPool(MonsterObjectPool ownerPool)
     {
         this.ownerPool = ownerPool;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHp -= damage;
+
+        if(currentHp <= 0)
+        {
+            ReturnToPool();
+
+            if(_pool == null)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 
     public void Setup(MonsterStats data, Rigidbody2D target)

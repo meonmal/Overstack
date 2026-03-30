@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private float moveSpeed;
 
+    public Vector2 MoveInput => moveInput;
+
     /// <summary>
     /// 외부에서 런타임 스탯을 연결하는 함수.
     /// </summary>

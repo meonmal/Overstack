@@ -13,6 +13,7 @@ public class PlayerRunTimeStat
             { StatType.Damage, new RunTimeStat(data.damage) },
             { StatType.CoolTime, new RunTimeStat(data.coolTime) },
             { StatType.PlayerHp, new RunTimeStat(data.playerHp) },
+            { StatType.ProjectileCount, new RunTimeStat(data.projectileCount) }
         };
     }
 
@@ -51,6 +52,11 @@ public class PlayerRunTimeStat
         float baseValue = stats[type].Value;
 
         return baseValue;
+    }
+
+    public int GetIntStat(StatType type)
+    {
+        return Mathf.RoundToInt(stats[type].Value);
     }
 
     /// <summary>

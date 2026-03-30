@@ -16,7 +16,8 @@ public class Player : MonoBehaviour
     /// <summary>
     /// 플레이어 런타임 스탯.
     /// </summary>
-    private PlayerRunTimeStat runTimeStat;
+    public PlayerRunTimeStat runTimeStat;
+
 
     private void Awake()
     {

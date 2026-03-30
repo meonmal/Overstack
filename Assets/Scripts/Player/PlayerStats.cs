@@ -8,6 +8,7 @@ public enum StatType
     Damage,
     CoolTime,
     PlayerHp,
+    ProjectileCount,
 }
 
 [CreateAssetMenu(fileName = "PlayerStats", menuName = "Scriptable Objects/PlayerStats")]
@@ -17,4 +18,5 @@ public class PlayerStats : ScriptableObject
     public List<float> damage;
     public List<float> coolTime;
     public List<float> playerHp;
+    public List<float> projectileCount;
 }

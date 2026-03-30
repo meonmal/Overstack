@@ -115,11 +115,15 @@ public class MonsterObjectPool : MonoBehaviour
     {
         // StageManager가 없으면 실행할 수 없음
         if (stageManager == null)
+        {
             return;
+        }
 
         // 현재 스테이지 데이터가 없으면 실행할 수 없음
         if (stageManager.CurrentStageData == null)
+        {
             return;
+        }
 
         // 현재 스테이지의 진행 시간
         float currentTime = stageManager.CurrentStageTime;
@@ -128,7 +132,9 @@ public class MonsterObjectPool : MonoBehaviour
         List<StageSpawnData> spawnDatas = stageManager.CurrentStageData.spawnDatas;
 
         if (spawnDatas == null || spawnDatas.Count == 0)
+        {
             return;
+        }
 
         for (int i = 0; i < spawnDatas.Count; i++)
         {
@@ -136,13 +142,17 @@ public class MonsterObjectPool : MonoBehaviour
 
             // 현재 시간이 이 몬스터의 등장 시간 범위 안이 아니면 스킵
             if (currentTime < spawnData.startTime || currentTime > spawnData.endTime)
+            {
                 continue;
+            }
 
             // 다음 스폰 시간이 아직 안 됐다면 스킵
             if (nextSpawnTimeMap.TryGetValue(spawnData, out float nextSpawnTime))
             {
                 if (currentTime < nextSpawnTime)
+                {
                     continue;
+                }
             }
 
             // 현재 살아있는 몬스터 수 확인
@@ -150,7 +160,9 @@ public class MonsterObjectPool : MonoBehaviour
 
             // 최대 생존 수를 이미 채웠다면 스폰하지 않음
             if (currentAliveCount >= spawnData.maxAliveCount)
+            {
                 continue;
+            }
 
             // 실제로 생성할 수 있는 수 계산
             int canSpawnCount = spawnData.maxAliveCount - currentAliveCount;
@@ -195,11 +207,14 @@ public class MonsterObjectPool : MonoBehaviour
     /// </summary>
     private int GetAliveCount(MonsterStats monsterData)
     {
-        if (monsterData == null)
+        if (monsterData == null){
             return 0;
+        }
 
         if (aliveCountMap.TryGetValue(monsterData, out int count))
+        {
             return count;
+        }
 
         return 0;
     }
@@ -279,7 +294,9 @@ public class MonsterObjectPool : MonoBehaviour
     public void RegisterAliveMonster(MonsterStats monsterData)
     {
         if (monsterData == null)
+        {
             return;
+        }
 
         if (!aliveCountMap.ContainsKey(monsterData))
         {
