@@ -9,6 +9,7 @@ public enum StatType
     CoolTime,
     PlayerHp,
     ProjectileCount,
+    ProjectileSpeed,
 }
 
 [CreateAssetMenu(fileName = "PlayerStats", menuName = "Scriptable Objects/PlayerStats")]
@@ -19,4 +20,5 @@ public class PlayerStats : ScriptableObject
     public List<float> coolTime;
     public List<float> playerHp;
     public List<float> projectileCount;
+    public List<float> projectileSpeed;
 }

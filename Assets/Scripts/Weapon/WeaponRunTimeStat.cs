@@ -11,7 +11,8 @@ public class WeaponRunTimeStat
         {
             { WeaponStatType.Damage, new RunTimeStat(data.damage) },
             { WeaponStatType.CoolTime, new RunTimeStat(data.coolTime) },
-            { WeaponStatType.ProjectileCount, new RunTimeStat(data.projectileCount) }
+            { WeaponStatType.ProjectileCount, new RunTimeStat(data.projectileCount) },
+            { WeaponStatType.ProjectileSpeed, new RunTimeStat(data.projectileSpeed) },
         };
     }
 

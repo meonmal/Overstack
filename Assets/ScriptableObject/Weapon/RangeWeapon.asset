@@ -9,42 +9,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1400717bbf7994140a4fc18f0daed215, type: 3}
-  m_Name: PlayerStats
+  m_Script: {fileID: 11500000, guid: eec0fdcad61b87744bbf4bc82a941beb, type: 3}
+  m_Name: RangeWeapon
   m_EditorClassIdentifier: 
-  moveSpeed:
-  - 10
-  - 3
-  - 4
-  - 5
-  - 6
   damage:
   - 1
+  - 1.5
   - 2
+  - 2.5
   - 3
-  - 4
-  - 5
   coolTime:
-  - 1
-  - 0.9
-  - 0.8
-  - 0.7
-  - 0.5
-  playerHp:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  projectileCount:
   - 2
+  - 1.5
+  - 1
+  - 0.5
+  - 0.2
+  projectileCount:
+  - 1
   - 2
   - 3
   - 4
   - 5
   projectileSpeed:
-  - 1
-  - 2
-  - 3
-  - 4
   - 5
+  - 7
+  - 10
+  - 15
+  - 20

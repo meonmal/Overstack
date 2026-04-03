@@ -13,7 +13,8 @@ public class PlayerRunTimeStat
             { StatType.Damage, new RunTimeStat(data.damage) },
             { StatType.CoolTime, new RunTimeStat(data.coolTime) },
             { StatType.PlayerHp, new RunTimeStat(data.playerHp) },
-            { StatType.ProjectileCount, new RunTimeStat(data.projectileCount) }
+            { StatType.ProjectileCount, new RunTimeStat(data.projectileCount) },
+            { StatType.ProjectileSpeed, new RunTimeStat(data.projectileSpeed) },
         };
     }
 
