@@ -15,19 +15,15 @@ public class Monster : MonoBehaviour, IDamageable
 
     private SpriteRenderer spriteRenderer;
     private MonsterMovement monsterMovement;
-    private MonsterObjectPool ownerPool;
+    private Collider2D monsterCollider;
     private float currentHp;
+    private bool isDead;
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         monsterMovement = GetComponent<MonsterMovement>();
-    }
-
-    private void Start()
-    {
-        spriteRenderer.sprite = MonsterStat.sprite;
-        currentHp = MonsterStat.MaxHp;
+        monsterCollider = GetComponent<Collider2D>();
     }
 
     public void SetPool(IObjectPool<Monster> pool)
@@ -35,23 +31,25 @@ public class Monster : MonoBehaviour, IDamageable
         _pool = pool;
     }
 
-    public void SetOwnerPool(MonsterObjectPool ownerPool)
-    {
-        this.ownerPool = ownerPool;
-    }
-
     public void TakeDamage(float damage)
     {
+        if (isDead)
+        {
+            return;
+        }
+
         currentHp -= damage;
 
         if(currentHp <= 0)
         {
-            ReturnToPool();
+            isDead = true;
 
             if(_pool == null)
             {
                 Destroy(gameObject);
             }
+
+            ReturnToPool();
         }
     }
 
@@ -61,6 +59,19 @@ public class Monster : MonoBehaviour, IDamageable
 
         MonsterStat = data;
 
+        isDead = false;
+        currentHp = data.MaxHp;
+
+        if(spriteRenderer != null)
+        {
+            spriteRenderer.sprite = data.sprite;
+        }
+
+        if(monsterCollider != null)
+        {
+            monsterCollider.enabled = true;
+        }
+
         if (animator != null && data.animatorController != null)
         {
             animator.runtimeAnimatorController = data.animatorController;
@@ -69,6 +80,12 @@ public class Monster : MonoBehaviour, IDamageable
 
     public void ReturnToPool()
     {
+        if(_pool == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         _pool.Release(this);
     }
 }

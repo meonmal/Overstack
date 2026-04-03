@@ -230,7 +230,6 @@ public class MonsterObjectPool : MonoBehaviour
         Monster clone = Instantiate(monsterPrefab);
 
         clone.SetPool(pool);
-        clone.SetOwnerPool(this);
         clone.transform.parent = transform;
 
         return clone;
