@@ -62,22 +62,44 @@ public class MeleeWeapon : MonoBehaviour
 
             int count = playerRunTimeStat.GetIntStat(StatType.ProjectileCount) * weaponRunTimeStat.GetIntStat(WeaponStatType.ProjectileCount);
 
-            float direction = playerMovement.MoveInput.x < 0 ? -1f : 1f;
-
-            float currentEndZ = endZ * direction;
+            /// 첫 번째 공격 방향을 정한다.
+            /// 플레이어가 왼쪽을 보고 있으면 -1, 아니면 1
+            float firstDirection = playerMovement.MoveInput.x < 0 ? -1f : 1f;
 
             float coolTime = playerRunTimeStat.GetStat(StatType.CoolTime) * weaponRunTimeStat.GetStat(WeaponStatType.CoolTime);
 
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
+                /// 짝수 번째 공격은 첫 방향,
+                /// 홀수 번째 공격은 반대 방향으로 공격한다.
+                float currentDirection = (i % 2 == 0) ? firstDirection : -firstDirection;
+
+                /// 방향에 따라 칼의 위치도 바꿔준다.
+                transform.localPosition = new Vector3(
+                    originLocalPosition.x * currentDirection,
+                    originLocalPosition.y,
+                    originLocalPosition.z);
+
+                float currentStartZ = startZ * currentDirection;
+                float currentEndZ = endZ * currentDirection;
+
                 weaponVisual.SetActive(true);
 
-                yield return StartCoroutine(Swing(startZ, currentEndZ));
+                yield return StartCoroutine(Swing(currentStartZ, currentEndZ));
 
                 weaponVisual.SetActive(false);
 
                 yield return null;
             }
+
+            /// 공격이 끝난 뒤에는 마지막 방향이 아니라
+            /// 현재 바라보는 방향 기준으로 다시 원위치시켜도 된다.
+            float idleDirection = playerMovement.MoveInput.x < 0 ? -1f : 1f;
+
+            transform.localPosition = new Vector3(
+                originLocalPosition.x * idleDirection,
+                originLocalPosition.y,
+                originLocalPosition.z);
 
             isAttacking = false;
 

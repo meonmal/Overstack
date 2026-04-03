@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eec0fdcad61b87744bbf4bc82a941beb, type: 3}
-  m_Name: OrbitSlayerWeapon
+  m_Name: AuroraWeapon
   m_EditorClassIdentifier: 
   damage:
   - 1
@@ -19,20 +19,10 @@ MonoBehaviour:
   - 4
   - 5
   coolTime:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  projectileCount:
   - 1
-  - 2
-  - 3
-  - 4
-  - 5
-  projectileSpeed:
-  - 90
-  - 180
-  - 270
-  - 360
-  - 540
+  - 0.8
+  - 0.6
+  - 0.4
+  - 0.2
+  projectileCount: []
+  projectileSpeed: []
