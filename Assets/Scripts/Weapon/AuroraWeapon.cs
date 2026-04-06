@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class AuroraWeapon : MonoBehaviour
+public class AuroraWeapon : WeaponBase
 {
     [SerializeField]
     private WeaponStat weaponStat;
@@ -16,6 +16,7 @@ public class AuroraWeapon : MonoBehaviour
     private float coolTime;
     private float attackRange;
 
+    public override WeaponRunTimeStat RunTimeStat => weaponRunTimeStat;
 
     private void Start()
     {

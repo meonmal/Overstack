@@ -3,10 +3,16 @@ using UnityEngine;
 
 public class PlayerRunTimeStat
 {
+    public int Level { get; private set; } = 1;
+    public float CurrentExp { get; private set; } = 0f;
+
     private Dictionary<StatType, RunTimeStat> stats;
+    private PlayerStats data;
 
     public PlayerRunTimeStat(PlayerStats data)
     {
+        this.data = data;
+
         stats = new Dictionary<StatType, RunTimeStat>
         {
             { StatType.MoveSpeed, new RunTimeStat(data.moveSpeed) },
@@ -15,6 +21,7 @@ public class PlayerRunTimeStat
             { StatType.PlayerHp, new RunTimeStat(data.playerHp) },
             { StatType.ProjectileCount, new RunTimeStat(data.projectileCount) },
             { StatType.ProjectileSpeed, new RunTimeStat(data.projectileSpeed) },
+            { StatType.AbsorbRange, new RunTimeStat(data.absorbRange) },
         };
     }
 
@@ -72,4 +79,20 @@ public class PlayerRunTimeStat
     /// <param name="type">확인할 스탯의 타입</param>
     /// <returns>최대 레벨이면 true</returns>
     public bool IsMax(StatType type) => stats[type].IsMax;
+
+    public int AddExp(float amount)
+    {
+        CurrentExp += amount;
+
+        int levelUpCount = 0;
+
+        while (CurrentExp >= data.GetRequiredExp(Level))
+        {
+            CurrentExp -= data.GetRequiredExp(Level);
+            Level++;
+            levelUpCount++;
+        }
+
+        return levelUpCount;
+    }
 }

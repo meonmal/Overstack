@@ -49,6 +49,9 @@ public class MonsterObjectPool : MonoBehaviour
     [SerializeField]
     private StageManager stageManager;
 
+    [SerializeField]
+    private ExpOrbSpawner expOrbSpawner;
+
     /// <summary>
     /// 몬스터를 재사용하기 위한 ObjectPool.
     /// </summary>
@@ -173,7 +176,7 @@ public class MonsterObjectPool : MonoBehaviour
                 Monster monster = pool.Get();
 
                 // 어떤 몬스터인지 데이터 주입
-                monster.Setup(spawnData.monsterData, target);
+                monster.Setup(spawnData.monsterData, target, expOrbSpawner);
 
                 // 생성 위치 설정
                 monster.transform.position = SpawnPosition();

@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class MeleeWeapon : MonoBehaviour
+public class MeleeWeapon : WeaponBase
 {
     [SerializeField]
     private GameObject weaponVisual; // 실제 칼
@@ -10,18 +10,21 @@ public class MeleeWeapon : MonoBehaviour
     private WeaponStat weaponStat;
 
     [SerializeField]
-    private float duration;
+    private float baseDuration;
     [SerializeField]
     private float startZ;
     [SerializeField]
     private float endZ;
 
+    private float swingSpeed;
     private float timer;
     private bool isAttacking;
     private Vector3 originLocalPosition;
     private PlayerMovement playerMovement;
     private WeaponRunTimeStat weaponRunTimeStat;
     private PlayerRunTimeStat playerRunTimeStat;
+
+    public override WeaponRunTimeStat RunTimeStat => weaponRunTimeStat;
 
     private void Awake()
     {
@@ -60,7 +63,7 @@ public class MeleeWeapon : MonoBehaviour
         {
             isAttacking = true;
 
-            int count = playerRunTimeStat.GetIntStat(StatType.ProjectileCount) * weaponRunTimeStat.GetIntStat(WeaponStatType.ProjectileCount);
+            int count = Mathf.RoundToInt(playerRunTimeStat.GetStat(StatType.ProjectileCount) * weaponRunTimeStat.GetStat(WeaponStatType.ProjectileCount));
 
             /// 첫 번째 공격 방향을 정한다.
             /// 플레이어가 왼쪽을 보고 있으면 -1, 아니면 1
@@ -109,13 +112,15 @@ public class MeleeWeapon : MonoBehaviour
 
     private IEnumerator Swing(float start, float end)
     {
+        swingSpeed = baseDuration / (playerRunTimeStat.GetStat(StatType.ProjectileSpeed) * weaponRunTimeStat.GetStat(WeaponStatType.ProjectileSpeed));
+
         timer = 0f;
 
-        while (timer < duration)
+        while (timer < swingSpeed)
         {
             timer += Time.deltaTime;
 
-            float t = Mathf.Clamp01(timer / duration);
+            float t = Mathf.Clamp01(timer / swingSpeed);
             float angle = Mathf.Lerp(start, end, t);
 
             transform.localRotation = Quaternion.Euler(0f, 0f, angle);

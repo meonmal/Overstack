@@ -18,12 +18,7 @@ MonoBehaviour:
   - 3
   - 4
   - 5
-  coolTime:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
+  coolTime: []
   projectileCount:
   - 1
   - 2

@@ -30,3 +30,9 @@ MonoBehaviour:
   - 3
   - 4
   - 5
+  projectileSpeed:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1

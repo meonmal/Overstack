@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class BulletSpawner : MonoBehaviour
+public class BulletSpawner : WeaponBase
 {
     [SerializeField]
     private WeaponStat weaponStat;
@@ -16,6 +16,8 @@ public class BulletSpawner : MonoBehaviour
     private float damage;
 
     private IObjectPool<Bullet> pool;
+
+    public override WeaponRunTimeStat RunTimeStat => weaponRunTimeStat;
 
     private void Awake()
     {
@@ -51,7 +53,7 @@ public class BulletSpawner : MonoBehaviour
 
             spawnTime = player.runTimeStat.GetStat(StatType.CoolTime) * weaponRunTimeStat.GetStat(WeaponStatType.CoolTime);
 
-            int spawnCount = (int)player.runTimeStat.GetStat(StatType.ProjectileCount) * (int)weaponRunTimeStat.GetStat(WeaponStatType.ProjectileCount);
+            int spawnCount = Mathf.RoundToInt(player.runTimeStat.GetStat(StatType.ProjectileCount) * weaponRunTimeStat.GetStat(WeaponStatType.ProjectileCount));
 
             for(int i = 0; i < spawnCount; i++)
             {

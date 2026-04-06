@@ -10,6 +10,7 @@ public enum StatType
     PlayerHp,
     ProjectileCount,
     ProjectileSpeed,
+    AbsorbRange,
 }
 
 [CreateAssetMenu(fileName = "PlayerStats", menuName = "Scriptable Objects/PlayerStats")]
@@ -21,4 +22,10 @@ public class PlayerStats : ScriptableObject
     public List<float> playerHp;
     public List<float> projectileCount;
     public List<float> projectileSpeed;
+    public List<float> absorbRange;
+
+    public float GetRequiredExp(int level)
+    {
+        return 10f * Mathf.Pow(1.25f, level - 1);
+    }
 }

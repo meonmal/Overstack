@@ -12,6 +12,8 @@ public class MonsterStats : ScriptableObject
     private float damage;
     [SerializeField]
     private float moveSpeed;
+    [SerializeField]
+    private float expAmount;
 
     /// <summary>
     /// 몬스터의 최대 체력.
@@ -25,4 +27,12 @@ public class MonsterStats : ScriptableObject
     /// 몬스터의 이동속도.
     /// </summary>
     public float MoveSpeed => moveSpeed;
+
+    public float ExpAmount => expAmount;
+
+    public Vector3 visualScale = Vector3.one;
+    public Vector3 visualOffset = Vector3.zero;
+
+    public float colliderRadius = 0.5f;
+    public Vector2 colliderOffset = Vector2.one;
 }

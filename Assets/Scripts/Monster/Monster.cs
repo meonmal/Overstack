@@ -6,6 +6,8 @@ public class Monster : MonoBehaviour, IDamageable
     public MonsterStats MonsterStat { get; private set; }
 
     [SerializeField]
+    private Transform visualRoot;
+    [SerializeField]
     private Animator animator;
 
     /// <summary>
@@ -15,15 +17,17 @@ public class Monster : MonoBehaviour, IDamageable
 
     private SpriteRenderer spriteRenderer;
     private MonsterMovement monsterMovement;
-    private Collider2D monsterCollider;
+    private ExpOrbSpawner expOrbSpawner;
+    private CircleCollider2D monsterCollider;
     private float currentHp;
     private bool isDead;
+    private float expAmount;
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         monsterMovement = GetComponent<MonsterMovement>();
-        monsterCollider = GetComponent<Collider2D>();
+        monsterCollider = GetComponent<CircleCollider2D>();
     }
 
     public void SetPool(IObjectPool<Monster> pool)
@@ -44,6 +48,10 @@ public class Monster : MonoBehaviour, IDamageable
         {
             isDead = true;
 
+            expAmount = MonsterStat.ExpAmount;
+
+            expOrbSpawner.Spawn(transform.position, expAmount);
+
             if(_pool == null)
             {
                 Destroy(gameObject);
@@ -53,11 +61,13 @@ public class Monster : MonoBehaviour, IDamageable
         }
     }
 
-    public void Setup(MonsterStats data, Rigidbody2D target)
+    public void Setup(MonsterStats data, Rigidbody2D target, ExpOrbSpawner expOrbSpawner)
     {
         monsterMovement.SetTarget(target);
 
         MonsterStat = data;
+
+        this.expOrbSpawner = expOrbSpawner;
 
         isDead = false;
         currentHp = data.MaxHp;
@@ -67,8 +77,16 @@ public class Monster : MonoBehaviour, IDamageable
             spriteRenderer.sprite = data.sprite;
         }
 
+        if(visualRoot != null)
+        {
+            visualRoot.localScale = data.visualScale;
+            visualRoot.localPosition = data.visualOffset;
+        }
+
         if(monsterCollider != null)
         {
+            monsterCollider.radius = data.colliderRadius;
+            monsterCollider.offset = data.colliderOffset;
             monsterCollider.enabled = true;
         }
 

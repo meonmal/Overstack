@@ -31,8 +31,33 @@ public class WeaponRunTimeStat
         return stats[statType].GetDelta();
     }
 
+    public float GetNextStat(WeaponStatType statType)
+    {
+        return stats[statType].GetNextValue();
+    }
+
     public void LevelUpStat(WeaponStatType statType)
     {
         stats[statType].LevelUp();
+    }
+
+    public bool IsMax(WeaponStatType statType)
+    {
+        return stats[statType].IsMax;
+    }
+
+    public List<WeaponStatType> GetAvailableStats()
+    {
+        List<WeaponStatType> result = new List<WeaponStatType>();
+
+        foreach(var pair in stats)
+        {
+            if (!pair.Value.IsMax)
+            {
+                result.Add(pair.Key);
+            }
+        }
+
+        return result;
     }
 }
