@@ -122,6 +122,7 @@ public class LevelUpSystem : MonoBehaviour
         currentOptions = options;
         SetButtons(currentOptions);
 
+        SoundManager.Instance.PlaySfx(SfxType.LevelUp);
         gameObject.SetActive(true);
         Time.timeScale = 0f;
     }

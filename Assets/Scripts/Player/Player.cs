@@ -2,13 +2,16 @@ using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
     /// <summary>
     /// 플레이어 스탯의 원본 SO
     /// </summary>
     [SerializeField]
     private PlayerStats playerStats;
+
+    [SerializeField]
+    private GameOver gameOver;
 
     /// <summary>
     /// 플레이어 이동 스크립트.
@@ -30,6 +33,8 @@ public class Player : MonoBehaviour
     /// </summary>
     private float absorbRange;
 
+    private float currentHp;
+
     /// <summary>
     /// 레벨업 선택창 시스템 참조.
     /// </summary>
@@ -39,6 +44,7 @@ public class Player : MonoBehaviour
     private List<WeaponBase> weapons = new List<WeaponBase>();
     public List<WeaponBase> Weapons => weapons;
 
+    public float CurrentHp => currentHp;
 
     private void Awake()
     {
@@ -46,6 +52,7 @@ public class Player : MonoBehaviour
         runTimeStat = new PlayerRunTimeStat(playerStats);
         playerMovement.Init(runTimeStat);
         coll = GetComponent<CircleCollider2D>();
+        currentHp = runTimeStat.GetStat(StatType.PlayerHp);
 
         weapons = new List<WeaponBase>(GetComponentsInChildren<WeaponBase>());
 
@@ -129,5 +136,17 @@ public class Player : MonoBehaviour
     {
         absorbRange = runTimeStat.GetStat(StatType.AbsorbRange);
         coll.radius = absorbRange;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        SoundManager.Instance.PlaySfx(SfxType.PlayerHit);
+        currentHp -= damage;
+
+        if(currentHp <= 0)
+        {
+            Time.timeScale = 0f;
+            gameOver.gameObject.SetActive(true);
+        }
     }
 }

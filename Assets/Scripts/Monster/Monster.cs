@@ -22,12 +22,18 @@ public class Monster : MonoBehaviour, IDamageable
     private float currentHp;
     private bool isDead;
     private float expAmount;
+    private float damage;
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = visualRoot.GetComponent<SpriteRenderer>();
         monsterMovement = GetComponent<MonsterMovement>();
         monsterCollider = GetComponent<CircleCollider2D>();
+    }
+
+    private void Start()
+    {
+        damage = MonsterStat.Damage;
     }
 
     public void SetPool(IObjectPool<Monster> pool)
@@ -42,11 +48,14 @@ public class Monster : MonoBehaviour, IDamageable
             return;
         }
 
+        SoundManager.Instance.PlaySfx(SfxType.EnemyHit);
         currentHp -= damage;
 
         if(currentHp <= 0)
         {
             isDead = true;
+
+            SoundManager.Instance.PlaySfx(SfxType.EnemyDead);
 
             expAmount = MonsterStat.ExpAmount;
 
@@ -80,13 +89,11 @@ public class Monster : MonoBehaviour, IDamageable
         if(visualRoot != null)
         {
             visualRoot.localScale = data.visualScale;
-            visualRoot.localPosition = data.visualOffset;
         }
 
         if(monsterCollider != null)
         {
             monsterCollider.radius = data.colliderRadius;
-            monsterCollider.offset = data.colliderOffset;
             monsterCollider.enabled = true;
         }
 
@@ -105,5 +112,20 @@ public class Monster : MonoBehaviour, IDamageable
         }
 
         _pool.Release(this);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(isDead == true)
+        {
+            return;
+        }
+
+        IDamageable iDamageable = collision.GetComponent<IDamageable>();
+
+        if(iDamageable != null && collision.CompareTag("Player"))
+        {
+            iDamageable.TakeDamage(damage);
+        }
     }
 }

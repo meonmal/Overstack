@@ -55,6 +55,8 @@ public class BulletSpawner : WeaponBase
 
             int spawnCount = Mathf.RoundToInt(player.runTimeStat.GetStat(StatType.ProjectileCount) * weaponRunTimeStat.GetStat(WeaponStatType.ProjectileCount));
 
+            SoundManager.Instance.PlaySfx(SfxType.PlayerShoot);
+
             for(int i = 0; i < spawnCount; i++)
             {
                 Bullet bullet = pool.Get();

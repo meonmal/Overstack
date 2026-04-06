@@ -115,4 +115,14 @@ public class OrbitSlayerWeapon : WeaponBase
 
         transform.Rotate(0f, 0f, rotationSpeed * Time.deltaTime);
     }
+
+    public override void RefreshStatByLevelUp(WeaponStatType statType)
+    {
+        switch (statType)
+        {
+            case WeaponStatType.ProjectileCount:
+                RefreshWeapons();
+                break;
+        }
+    }
 }

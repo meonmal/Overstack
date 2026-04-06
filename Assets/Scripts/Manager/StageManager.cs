@@ -12,6 +12,7 @@ public class StageManager : MonoBehaviour
 
     private void Start()
     {
+        SoundManager.Instance.PlayBgm(BgmType.Game);
         StartStage(0);
     }
 

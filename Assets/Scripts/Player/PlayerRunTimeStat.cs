@@ -95,4 +95,9 @@ public class PlayerRunTimeStat
 
         return levelUpCount;
     }
+
+    public float GetExpProgress()
+    {
+        return CurrentExp / data.GetRequiredExp(Level);
+    }
 }

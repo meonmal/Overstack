@@ -31,8 +31,6 @@ public class MonsterStats : ScriptableObject
     public float ExpAmount => expAmount;
 
     public Vector3 visualScale = Vector3.one;
-    public Vector3 visualOffset = Vector3.zero;
 
     public float colliderRadius = 0.5f;
-    public Vector2 colliderOffset = Vector2.one;
 }
